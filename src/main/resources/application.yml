@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./src/main/resources/data/patterns
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddlAuto: update
+  sql:
+    init:
+      mode: always
