@@ -1,10 +1,7 @@
 package org.superparty.patterns.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "pattern")
@@ -12,6 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Pattern {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
