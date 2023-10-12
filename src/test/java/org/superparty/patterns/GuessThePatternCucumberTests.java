@@ -205,9 +205,6 @@ public class GuessThePatternCucumberTests {
 		patternController = new PatternController(patternService);
 	}
 
-
-
-
 	// pattern-view.feature
 	@When("клиент переходит на {string}")
 	public void clientGoesToPatternsPage(String page) {
@@ -221,6 +218,5 @@ public class GuessThePatternCucumberTests {
 		Assert.assertEquals(patternService.getCountOfGuesses(patterns), model.getAttribute("guesses"));
 		Assert.assertEquals("patterns", model.getAttribute("patternsPage"));
 	}
-
 
 }
