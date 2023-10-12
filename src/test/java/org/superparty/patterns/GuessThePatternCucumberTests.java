@@ -4,14 +4,24 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.val;
+import org.glassfish.jaxb.core.v2.TODO;
 import org.junit.Assert;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.superparty.patterns.controller.PatternController;
@@ -20,10 +30,11 @@ import org.superparty.patterns.repository.PatternRepository;
 import org.superparty.patterns.service.PatternService;
 import org.superparty.patterns.util.Answer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
+
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GuessThePatternCucumberTests {
@@ -205,6 +216,8 @@ public class GuessThePatternCucumberTests {
 		patternController = new PatternController(patternService);
 	}
 
+
+	// pattern-service-find-by-id.feature + pattern-service-answer-checking.feature
 	@Given("был передан id паттерна {string}")
 	public void patternsIdWasGiven(String string) {
 		model.addAttribute("patternId", Integer.valueOf(string));
@@ -222,7 +235,6 @@ public class GuessThePatternCucumberTests {
 		val isReceivedObjectNull = model.getAttribute("patternFromDb") == null;
 		Assert.assertEquals(isNull, isReceivedObjectNull);
 	}
-
 
 
 	// pattern-view.feature
@@ -252,4 +264,19 @@ public class GuessThePatternCucumberTests {
 		Assert.assertNotNull(model.getAttribute("answer"));
 	}
 
+
+	// pattern-service-answer-checking.feature, Given в начале
+	@When("дан ответ {string}")
+	public void answerWasGiven(String answerValue) {
+		val answer = new Answer();
+		answer.setValue(answerValue);
+		model.addAttribute("answerFlag", patternService.checkTheAnswer(answer,
+				Long.valueOf((Integer) model.getAttribute("patternId"))));
+	}
+
+	@Then("вернуть флаг {string}")
+	public void returnFlag(String stringFlag) {
+		val flag = Boolean.valueOf(stringFlag);
+		Assert.assertEquals(flag, model.getAttribute("answerFlag"));
+	}
 }
