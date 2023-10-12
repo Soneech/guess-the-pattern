@@ -23,4 +23,9 @@ public class PatternService {
     public int getCountOfGuesses(List<Pattern> patterns) {
         return patterns.stream().mapToInt(Pattern::getGuesses).sum();
     }
+
+    public List<Pattern> findAll() {
+        return patternRepository.findAll();
+    }
+
 }
