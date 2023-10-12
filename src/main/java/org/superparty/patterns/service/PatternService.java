@@ -28,4 +28,9 @@ public class PatternService {
         return patternRepository.findAll();
     }
 
+    public Pattern increaseCountOfGuessesForPattern(Pattern pattern) {
+        pattern.setGuesses(pattern.getGuesses() + 1);
+        return patternRepository.save(pattern);
+    }
+
 }
