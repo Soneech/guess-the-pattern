@@ -205,6 +205,26 @@ public class GuessThePatternCucumberTests {
 		patternController = new PatternController(patternService);
 	}
 
+	@Given("был передан id паттерна {string}")
+	public void patternsIdWasGiven(String string) {
+		model.addAttribute("patternId", Integer.valueOf(string));
+	}
+
+	@When("из базы данных был получен паттерн с id {string}")
+	public void getPatternFromDb(String id) {
+		val pattern = patternService.findById(Long.valueOf((Integer) model.getAttribute("patternId")));
+		model.addAttribute("patternFromDb", pattern);
+	}
+
+	@Then("полученный паттерн является {string}")
+	public void receivedPatternIsNullOrNotNull(String isNullOrNotNull) {
+		val isNull = isNullOrNotNull.equals("null");
+		val isReceivedObjectNull = model.getAttribute("patternFromDb") == null;
+		Assert.assertEquals(isNull, isReceivedObjectNull);
+	}
+
+
+
 	// pattern-view.feature
 	@When("клиент переходит на {string}")
 	public void clientGoesToPatternsPage(String page) {
