@@ -4,24 +4,14 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.val;
-import org.glassfish.jaxb.core.v2.TODO;
 import org.junit.Assert;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.superparty.patterns.controller.PatternController;
@@ -31,10 +21,8 @@ import org.superparty.patterns.service.PatternService;
 import org.superparty.patterns.util.Answer;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GuessThePatternCucumberTests {
