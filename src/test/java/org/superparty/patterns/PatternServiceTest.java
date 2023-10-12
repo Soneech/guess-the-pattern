@@ -37,6 +37,14 @@ public class PatternServiceTest {
     }
 
     @Test
+    public void testGetCountOfGuesses() {
+        int sum = patterns.stream().mapToInt(Pattern::getGuesses).sum();
+        when(patternService.getCountOfGuesses(patterns))
+                .thenReturn(sum);
+        Assertions.assertEquals(sum, patternService.getCountOfGuesses(patterns));
+    }
+
+    @Test
     public void testIncreaseCountOfGuessesForPattern() {
         Pattern pattern = patterns.get(0);
 
