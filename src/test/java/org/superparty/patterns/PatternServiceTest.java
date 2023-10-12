@@ -36,4 +36,15 @@ public class PatternServiceTest {
         Assertions.assertEquals("прототип", patternService.findAll().get(2).getName());
     }
 
+    @Test
+    public void testIncreaseCountOfGuessesForPattern() {
+        Pattern pattern = patterns.get(0);
+
+        Pattern newPattern = new Pattern(pattern.getId(), pattern.getName(),
+                pattern.getFileName(), pattern.getGuesses() + 1);
+
+        when(patternService.increaseCountOfGuessesForPattern(pattern)).thenReturn(newPattern);
+        Pattern result = patternService.increaseCountOfGuessesForPattern(pattern);
+        Assertions.assertEquals(result.getGuesses(), pattern.getGuesses() + 1);
+    }
 }
