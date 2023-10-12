@@ -219,4 +219,17 @@ public class GuessThePatternCucumberTests {
 		Assert.assertEquals("patterns", model.getAttribute("patternsPage"));
 	}
 
+	@When("клиент переходит на patterns {string}")
+	public void clientGoesToConcretePattern(String string) {
+		model.addAttribute("concretePattern", patternController.patternPage(Long.valueOf(string), model));
+	}
+
+	@Then("вернуть страницу {string} с данными паттерна, найденного по id {string}")
+	public void returnPageWithDataAboutPattern(String page, String id) {
+		System.out.println("HIHI2" + model);
+		Assert.assertEquals(page, model.getAttribute("concretePattern"));
+		Assert.assertEquals(patternService.findById(Long.valueOf(id)), model.getAttribute("pattern"));
+		Assert.assertNotNull(model.getAttribute("answer"));
+	}
+
 }
