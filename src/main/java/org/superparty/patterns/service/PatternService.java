@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.superparty.patterns.model.Pattern;
 import org.superparty.patterns.repository.PatternRepository;
+import org.superparty.patterns.util.Answer;
 
 import java.util.List;
 
@@ -33,4 +34,11 @@ public class PatternService {
         return patternRepository.save(pattern);
     }
 
+    // test with cucumber
+    public boolean checkTheAnswer(Answer answer, Long id) {
+        Pattern pattern = patternRepository.findById(id).get();
+        if (!answer.getValue().isEmpty())
+            return answer.getValue().toLowerCase().equals(pattern.getName());
+        return false;
+    }
 }
